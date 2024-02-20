@@ -1,0 +1,133 @@
+﻿# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: double_liangfen
+  name: 兩分雙拼
+  version: "4.0.1"
+  author:
+    - 天珩 <2417647441@qq.com>
+    - 山前 <i@estela.moe>
+  description: |
+    Intellegent ABC Double Pinyin for LiangFen
+    dict from http://cheonhyeong.com/ but modified
+    Original description:
+    http://yedict.com/
+    Dict is from http://yedict.com/
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [中文, 西文]
+  - name: full_shape
+    states: [半角, 全角]
+  - name: simplification
+    states: [漢字, 汉字]
+  - name: ascii_punct
+    states: [。，, ．，]
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - r10n_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba # 呃，倒背字母表完全是佛振的個人喜好XD
+  delimiter: " '"
+  algebra: #來自double_pinyin_abc
+    - xform/-/--/
+    - derive/^([jqxy])u$/$1v/
+    - xform/^zh/A/ # 替換聲母鍵，用大寫以防與原有的字母混淆
+    - xform/^ch/E/
+    - xform/^sh/V/
+    - xform/-zh/-A/ # 替換聲母鍵，用大寫以防與原有的字母混淆
+    - xform/-ch/-E/
+    - xform/-sh/-V/
+    - xform/^([aoe].*)$/O$1/ # 添上固定的零聲母o，先標記爲大寫O
+    - xform/^([aoe].*)-/O$1-/ # 添上固定的零聲母o，先標記爲大寫O
+    - xform/-([aoe].*)$/-O$1/ # 添上固定的零聲母o，先標記爲大寫O
+    - xform/ei$/Q/ # 替換韻母鍵
+    - xform/ian$/W/ # ※2
+    - xform/er$|iu$/R/ # 對應兩種韻母的；音節er現在變爲OR了
+    - xform/[iu]ang$/T/ # ※1
+    - xform/ing$/Y/
+    - xform/uo$/O/
+    - xform/uan$/P/ # ※3
+    - xform/i?ong$/S/
+    - xform/[iu]a$/D/
+    - xform/en$/F/
+    - xform/eng$/G/
+    - xform/ang$/H/ # 檢查一下在此之前是否已轉換過了帶界音的ang；好，※1處有了
+    - xform/an$/J/ # 如果※2、※3還無有出現在上文中，應該把他們提到本行之前
+    - xform/iao$/Z/ # 對——像這樣讓iao提前出場
+    - xform/ao$/K/
+    - xform/in$|uai$/C/ # 讓uai提前出場
+    - xform/ai$/L/
+    - xform/ie$/X/
+    - xform/ou$/B/
+    - xform/un$/N/
+    - xform/[uv]e$|ui$/M/
+    - xform/ei-/Q/ # 替換韻母鍵
+    - xform/ian-/W/ # ※2
+    - xform/er-|iu-/R/ # 對應兩種韻母的；音節er現在變爲OR了
+    - xform/[iu]ang-/T/ # ※1
+    - xform/ing-/Y/
+    - xform/uo-/O/
+    - xform/uan-/P/ # ※3
+    - xform/i?ong-/S/
+    - xform/[iu]a-/D/
+    - xform/en-/F/
+    - xform/eng-/G/
+    - xform/ang-/H/ # 檢查一下在此之前是否已轉換過了帶界音的ang；好，※1處有了
+    - xform/an-/J/ # 如果※2、※3還無有出現在上文中，應該把他們提到本行之前
+    - xform/iao-/Z/ # 對——像這樣讓iao提前出場
+    - xform/ao-/K/
+    - xform/in-|uai-/C/ # 讓uai提前出場
+    - xform/ai-/L/
+    - xform/ie-/X/
+    - xform/ou-/B/
+    - xform/un-/N/
+    - xform/[uv]e-|ui-/M/
+    - xform/-//
+    - xform/rr/or/
+    - xlit/QWERTYOPASDFGHJKLZXCVBNM/qwertyopasdfghjklzxcvbnm/ # 最後把雙拼碼全部變小寫
+
+translator:
+  dictionary: double_liangfen
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  tips: "〔拼音〕"
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*$"

@@ -1,0 +1,54 @@
+# Rime schema
+# encoding: utf-8
+
+__include: double_pinyin_abc.schema:/
+
+schema:
+  schema_id: double_pinyin_abc_bpmf # 專有的方案標識
+  name: 智能ABC雙拼注音
+  version: "0.17.1"
+  description: |
+    朙月拼音＋智能ABC雙拼方案。
+    山前自用，引用symbols，雙拼兩分反查，注音回顯。
+
+translator:
+  preedit_format:
+    - xform/o(\w)/_$1/ # 零聲母先改爲0，以方便後面的轉換
+    - xform/(\w)q/$1I/ # 雙拼第二碼轉換爲韻母
+    - xform/(\w)n/$1uN/
+    - xform/(\w)g/$1eG/
+    - xform/(\w)w/$1iM/
+    - xform/([dtnljqx])r/$1iU/ # 對應多種韻母的雙拼碼，按搭配的聲母做區分
+    - xform/_r/R/
+    - xform/([nljqx])t/$1iK/
+    - xform/(\w)t/$1uK/
+    - xform/(\w)y/$1ㄧㄥ/
+    - xform/([dtnlgkhaevrzcs])o/$1uo/
+    - xform/(\w)p/$1uM/
+    - xform/([jqx])s/$1iong/
+    - xform/(\w)s/$1uG/
+    - xform/([gkhaevrzcs])d/$1ua/
+    - xform/(\w)d/$1ia/
+    - xform/(\w)f/$1N/
+    - xform/(\w)h/$1K/
+    - xform/(\w)j/$1M/
+    - xform/(\w)k/$1O/
+    - xform/(\w)l/$1A/
+    - xform/(\w)z/$1iO/
+    - xform/(\w)x/$1iE/
+    - xform/([gkhaev])c/$1uA/
+    - xform/(\w)c/$1iN/
+    - xform/(\w)b/$1U/
+    - xform/([jqxynl])m/$1vE/
+    - xform/(\w)m/$1uI/
+    - "xform/(^|[ '])a/$1Z/" # 復原聲母，音節開始處的雙拼字母a改寫爲zh；其他位置的才真正是a
+    - "xform/(^|[ '])e/$1C/"
+    - "xform/(^|[ '])v/$1S/"
+    - "xform/(^|[ '])o/$1_/"
+    - xform/_(\w)/$1/
+    #注音，啓動！
+    - xform/yi?/i/
+    - xform/wu?/u/
+    - xform/iu/v/
+    - xform/^([jqx])u/$1v/
+    - "xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ|"
