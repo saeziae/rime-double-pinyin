@@ -3,8 +3,8 @@
 # encoding: utf-8
 
 schema:
-  schema_id: double_liangfen
-  name: 兩分雙拼
+  schema_id: double_liangfen_abc
+  name: 兩分雙拼(智能ABC)
   version: "4.0.1"
   author:
     - 天珩 <2417647441@qq.com>
@@ -113,9 +113,11 @@ speller:
 
 translator:
   dictionary: double_liangfen
+  prism: double_liangfen_abc
 
 reverse_lookup:
   dictionary: luna_pinyin
+  prism: double_pinyin_abc
   prefix: "`"
   tips: "〔拼音〕"
   preedit_format:

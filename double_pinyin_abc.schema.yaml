@@ -122,6 +122,7 @@ translator:
 
 reverse_lookup:
   dictionary: double_liangfen
+  prism: double_liangfen_abc
   enable_completion: true
   prefix: "`"
   suffix: "'"

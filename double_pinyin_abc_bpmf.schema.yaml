@@ -16,13 +16,13 @@ translator:
     - xform/o(\w)/_$1/ # 零聲母先改爲0，以方便後面的轉換
     - xform/(\w)q/$1I/ # 雙拼第二碼轉換爲韻母
     - xform/(\w)n/$1uN/
-    - xform/(\w)g/$1eG/
+    - xform/(\w)g/$1G/
     - xform/(\w)w/$1iM/
     - xform/([dtnljqx])r/$1iU/ # 對應多種韻母的雙拼碼，按搭配的聲母做區分
     - xform/_r/R/
     - xform/([nljqx])t/$1iK/
     - xform/(\w)t/$1uK/
-    - xform/(\w)y/$1ㄧㄥ/
+    - xform/(\w)y/$1iG/
     - xform/([dtnlgkhaevrzcs])o/$1uo/
     - xform/(\w)p/$1uM/
     - xform/([jqx])s/$1iong/
@@ -39,6 +39,7 @@ translator:
     - xform/([gkhaev])c/$1uA/
     - xform/(\w)c/$1iN/
     - xform/(\w)b/$1U/
+    - xform/ie/iE/
     - xform/([jqxynl])m/$1vE/
     - xform/(\w)m/$1uI/
     - "xform/(^|[ '])a/$1Z/" # 復原聲母，音節開始處的雙拼字母a改寫爲zh；其他位置的才真正是a
